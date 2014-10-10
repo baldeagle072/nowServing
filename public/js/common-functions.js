@@ -17,3 +17,7 @@ socket.on('now serving name', function(nextPerson) {
 		});
 	}
 });
+
+socket.on('class done', function() {
+	$('#names').empty();
+});

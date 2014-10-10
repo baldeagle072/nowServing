@@ -36,6 +36,13 @@ io.on('connection', function(socket){
 		io.emit('next', nextPerson);
 		io.emit('now serving name', nextPerson);
 	});
+	socket.on('class done', function() {
+		nextPerson = 'No One';
+		names = [];
+		io.emit('class done');
+		io.emit('now serving name', nextPerson);
+		say.speak('Alex', 'Class is done, please clean up');
+	})
 });
 
 http.listen(8080, function(){

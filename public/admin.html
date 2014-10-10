@@ -14,7 +14,8 @@
 	<ul id='names'></ul>
 	
 	<form>
-		<button>Next!</button>
+		<button id="nextButton">Next!</button>
+		<button id="classDoneButton">Done</button>
 	</form>
 	
 	<script src="/socket.io/socket.io.js"></script>
@@ -22,8 +23,12 @@
 	
 	<script>
 		var socket = io();
-		$('form').submit(function(){
+		$('#nextButton').click(function(){
 			socket.emit('next');
+			return false;
+		});
+		$('#classDoneButton').click(function(){
+			socket.emit('class done');
 			return false;
 		});
 	</script>
