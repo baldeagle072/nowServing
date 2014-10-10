@@ -42,7 +42,14 @@ io.on('connection', function(socket){
 		io.emit('class done');
 		io.emit('now serving name', nextPerson);
 		say.speak('Alex', 'Class is done, please clean up');
-	})
+	});
+	socket.on('remove name', function(removedName) {
+		var i = names.indexOf(removedName);
+		if (i != -1) {
+			names.splice(i, 1);
+		}
+		io.emit('remove name', removedName);
+	});
 });
 
 http.listen(8080, function(){

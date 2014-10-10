@@ -31,6 +31,10 @@
 			socket.emit('class done');
 			return false;
 		});
+		$(document).on('click', 'li', function() {
+			socket.emit('remove name', $(this).text());
+			return false;
+		})
 	</script>
 
 	<script src="js/common-functions.js"></script>

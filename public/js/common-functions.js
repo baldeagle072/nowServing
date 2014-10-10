@@ -21,3 +21,7 @@ socket.on('now serving name', function(nextPerson) {
 socket.on('class done', function() {
 	$('#names').empty();
 });
+
+socket.on('remove name', function(removedName) {
+	$('li:contains(' + removedName + ')').remove();
+});
