@@ -34,7 +34,7 @@ io.on('connection', function(socket){
 		nextPerson = names.shift();
 		if (nextPerson) say.speak('Alex', 'Now serving, ' + nextPerson);
 		io.emit('next', nextPerson);
-		socket.emit('now serving name', nextPerson);
+		io.emit('now serving name', nextPerson);
 	});
 });
 
