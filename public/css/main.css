@@ -1,0 +1,51 @@
+body {
+	background:#934A00;
+	color:gold;
+	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;;
+}
+
+.container {
+	width: 900px;
+	margin: 10px auto;
+}
+
+#now-serving-container {
+	border: dotted 4px gold;
+	width: 400px;
+	margin: 0 auto;
+}
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-decoration:underline;
+	margin-left:20px;
+	font-size:30px;
+}
+
+#nowServing {
+	text-align: center;
+	font-size: 30px;
+}
+
+#names {
+	list-style-type:none;
+}
+
+#names li {
+	font-size:22px;
+}
+
+#addedName {
+	font-size:22px;
+	background:black;
+	color:white;
+	text-align:center;
+}
+
+#get-in-line {
+	font-size:22px;
+	background:gold;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Now Serving - Admin</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+<div class="container">
+	<div id='now-serving-container'>
+		<h1>Now Serving - Admin</h1>
+		<h3 id='nowServing'>No One</h3>
+	</div>
+	<h2>The line</h2>
+	<ul id='names'></ul>
+	
+	<form>
+		<button>Next!</button>
+	</form>
+	
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="js/jquery-1.11.1.js"></script>
+	
+	<script>
+		var socket = io();
+		$('form').submit(function(){
+			socket.emit('next');
+			return false;
+		});
+	</script>
+
+	<script src="js/common-functions.js"></script>
+</div>
+</body>
+</html>
