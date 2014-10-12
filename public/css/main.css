@@ -30,11 +30,19 @@ h2 {
 	font-size: 30px;
 }
 
-#names {
+#theLine {
+	float:left;
+}
+
+#classListDiv {
+	float:right;
+}
+
+ul {
 	list-style-type:none;
 }
 
-#names li {
+li {
 	font-size:22px;
 }
 

@@ -32,41 +32,54 @@
 		$(document).ready(function() {
 			$('#nextButton').focus();
 		});
+
 		var socket = io();
+
 		$('#nextButton').click(function(){
 			socket.emit('next');
 			return false;
 		});
+
 		$('#classDoneButton').click(function(){
 			socket.emit('class done');
 			return false;
 		});
+
 		$('#loadClassForm').submit(function(){
 			socket.emit('load class', $('#classListName').val());
 			return false;
 		});
+
 		$('#clearClassButton').click(function(){
 			socket.emit('clear class');
+			return false;
+		});
+
+		socket.on('clear class', function(){
 			$('#classListName').val('');
 			$('#classLoadMsg').text('');
 			$('#clearClassButton').addClass('hidden');
-			return false;
 		});
+		
 		$(document).on('click', 'li', function() {
 			socket.emit('remove name', $(this).text());
 			return false;
 		});
-		socket.on('load class', function(classNames) {
-			if (classNames == "error") {
+
+		socket.on('load class', function(returnData) {
+			var loadedClassListName = returnData.loadedClassListName;
+			var classNames = returnData.classNames;
+			if (returnData == "error") {
 				$('#classLoadMsg').text('Error');
 				$('#classListName').val('');
 				$('#clearClassButton').addClass('hidden');
-			} else if (classNames == "no file") {
+			} else if (returnData == "no file") {
 				$('#classLoadMsg').text('File does not exists');
 				$('#classListName').val('');
 				$('#clearClassButton').addClass('hidden');
 			} else {
 				$('#classLoadMsg').text('Class Loaded');
+				$('#classListName').val(loadedClassListName);
 				$('#clearClassButton').removeClass('hidden');
 			}
 		});

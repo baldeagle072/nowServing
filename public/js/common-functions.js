@@ -23,5 +23,5 @@ socket.on('class done', function() {
 });
 
 socket.on('remove name', function(removedName) {
-	$('li:contains(' + removedName + ')').remove();
+	$('#names li:contains(' + removedName + ')').remove();
 });

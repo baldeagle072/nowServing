@@ -10,13 +10,22 @@
 		<h1>Now Serving</h1>
 		<h3 id='nowServing'>No One</h3>
 	</div>
-	<h2>The line</h2>
-	<ul id='names'></ul>
-	
-	<form>
-		<input id="addedName" autocomplete="off" />
-		<button id="get-in-line">Get in line</button>
-	</form>
+
+	<div id="theLine">
+		<h2>The line</h2>
+		<ul id='names'></ul>
+		
+		<form>
+			<input id="addedName" autocomplete="off" />
+			<button id="get-in-line">Get in line</button>
+		</form>
+	</div>
+
+	<div id='classListDiv' class="hidden">
+		<h2>Click your name to get in line</h2>
+		<ul id='classList'>
+		</ul>
+	</div>
 	
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="js/jquery-1.11.1.js"></script>
@@ -28,6 +37,45 @@
 			$('#addedName').val('');
 			return false;
 		});
+
+		socket.on('load class', function(returnData) {
+			var loadedClassListName = returnData.loadedClassListName;
+			var classNames = returnData.classNames;
+			var names = returnData.names;
+			if (returnData == 'error') {
+				
+			} else if (returnData == 'no file') {
+
+			} else {
+				for (n in classNames) {
+					$('#classList').append($('<li>').text(classNames[n]));
+				}
+				$('form').addClass('hidden');
+				$('#classListDiv').removeClass('hidden');
+				if (names) {
+					for (n in names) {
+						$('#classList li:contains(' + names[n] + ')').addClass('hidden');
+					}
+				}
+			}
+		});
+
+		socket.on('clear class', function() {
+			$('#classList').empty();
+			$('form').removeClass('hidden');
+			$('#classListDiv').addClass('hidden');
+		});
+
+		socket.on('reveal name', function(lastPerson) {
+			$('#classList li:contains(' + lastPerson + ')').removeClass('hidden');
+		});
+
+		$(document).on('click', '#classList li', function() {
+			socket.emit('add name', $(this).text());
+			$(this).addClass('hidden');
+			return false;
+		});
+
 	</script>
 
 	<script src="js/common-functions.js"></script>
