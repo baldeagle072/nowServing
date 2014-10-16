@@ -3,6 +3,10 @@
 <head>
 	<title>Now Serving - Admin</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="js/flipclock/flipclock.css">
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="js/jquery-1.11.1.js"></script>
+	<script src="js/flipclock/flipclock.js"></script>
 </head>
 <body>
 <div class="container">
@@ -24,13 +28,20 @@
 		<button id="clearClassButton" class="hidden">Clear Class</button>
 	</form>
 	<p id="classLoadMsg"></p>
-	
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="js/jquery-1.11.1.js"></script>
+
+	<div class="clock" style="margin:2em;"></div>
+
+	<form id="sayForm">
+		<input id="sayThis" autocomplete="off" size="75" />
+		<button type="submit" id="sayButton">Say it</button>
+	</form>
 	
 	<script>
 		$(document).ready(function() {
 			$('#nextButton').focus();
+			clock = $('.clock').FlipClock({
+				clockFace: 'TwelveHourClock'
+			});
 		});
 
 		var socket = io();
@@ -42,11 +53,20 @@
 
 		$('#classDoneButton').click(function(){
 			socket.emit('class done');
+			$('#nextButton').focus();
+			return false;
+		});
+
+		$('#sayForm').submit(function(){
+			socket.emit('say this', $('#sayThis').val());
+			$('#sayThis').val('');
+			$('#nextButton').focus();
 			return false;
 		});
 
 		$('#loadClassForm').submit(function(){
 			socket.emit('load class', $('#classListName').val());
+			$('#nextButton').focus();
 			return false;
 		});
 
@@ -59,10 +79,12 @@
 			$('#classListName').val('');
 			$('#classLoadMsg').text('');
 			$('#clearClassButton').addClass('hidden');
+			$('#nextButton').focus();
 		});
 		
 		$(document).on('click', 'li', function() {
 			socket.emit('remove name', $(this).text());
+			$('#nextButton').focus();
 			return false;
 		});
 
@@ -83,6 +105,8 @@
 				$('#clearClassButton').removeClass('hidden');
 			}
 		});
+
+
 	</script>
 
 	<script src="js/common-functions.js"></script>

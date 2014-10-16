@@ -9,6 +9,7 @@ var nextPerson = 'No One';
 var classLoaded = false;
 var returnData = {};
 var lastPerson = 'No One';
+var pronounce = require('./pronounce')
 
 app.use(express.static(__dirname + '/public'));
 
@@ -41,7 +42,7 @@ io.on('connection', function(socket){
 	socket.on('next', function() {
 		lastPerson = nextPerson;
 		nextPerson = names.shift();
-		if (nextPerson) say.speak('Alex', 'Now serving, ' + nextPerson);
+		if (nextPerson) say.speak('Alex', 'Now serving, ' + pronounce.correctly(nextPerson));
 		io.emit('next', nextPerson);
 		io.emit('now serving name', nextPerson);
 		if (classLoaded && (lastPerson != 'No One')) {
@@ -107,6 +108,10 @@ io.on('connection', function(socket){
 		classLoaded = false;
 		returnData = {};
 		console.log('class cleared');
+	});
+
+	socket.on('say this', function(sayThis) {
+		say.speak('Alex', sayThis);
 	});
 
 });
