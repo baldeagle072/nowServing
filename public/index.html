@@ -74,7 +74,7 @@
 
 		$(document).on('click', '#classList li', function() {
 			$this = $(this);
-			var clickedName = $this.text()
+			var clickedName = $this.text();
 			swal({
 				title: "Are you sure?",
 				text: clickedName + " is going to be added to the list.",
@@ -82,12 +82,11 @@
 				showCancelButton: true,
 				confirmButtonColor: "#00CC00",
 				confirmButtonText: "Add",
-				closeOnConfirm: false
+				closeOnConfirm: true
 			},
 			function(){
 				socket.emit('add name', clickedName);
 				$this.addClass('hidden');
-				swal("Added!", "You have been added.", "success");
 			});
 			
 		});

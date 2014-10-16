@@ -73,6 +73,10 @@ button {
 	cursor:pointer;
 }
 
+.adminButton:focus {
+	border: black 2px dotted;
+}
+
 .hidden {
 	visibility: hidden;
 }

@@ -7,6 +7,8 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="js/jquery-1.11.1.js"></script>
 	<script src="js/flipclock/flipclock.js"></script>
+	<script src="js/lib/sweet-alert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/lib/sweet-alert.css">
 </head>
 <body>
 <div class="container">
@@ -18,8 +20,8 @@
 	<ul id='names'></ul>
 	
 	<form>
-		<button id="nextButton">Next!</button>
-		<button id="classDoneButton">Done</button>
+		<button id="nextButton" class="adminButton">Next!</button>
+		<button id="classDoneButton" class="adminButton">Done</button>
 	</form>
 
 	<form id="loadClassForm">
@@ -41,6 +43,9 @@
 			$('#nextButton').focus();
 			clock = $('.clock').FlipClock({
 				clockFace: 'TwelveHourClock'
+			});
+			$(window).on('focus',function() {
+				$('#nextButton').focus();
 			});
 		});
 
@@ -83,9 +88,19 @@
 		});
 		
 		$(document).on('click', 'li', function() {
-			socket.emit('remove name', $(this).text());
-			$('#nextButton').focus();
-			return false;
+			var clickedName = $(this).text();
+			swal({
+				title: "Are you sure?",
+				text: clickedName + " is going to be removed.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "00CC00",
+				confirmButtonText: "Remove",
+				closeOnConfirm: true
+			}, function() {
+				socket.emit('remove name', clickedName);
+				$('#nextButton').focus();
+			});
 		});
 
 		socket.on('load class', function(returnData) {

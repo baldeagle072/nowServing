@@ -22,6 +22,7 @@ app.get('/admin', function(req, res) {
 });
 
 io.on('connection', function(socket){
+	console.log(socket.handshake.headers.referer)
 	for (n in names){
 		socket.emit('add name', names[n]);
 	}
